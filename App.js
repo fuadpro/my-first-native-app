@@ -1,110 +1,106 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import {SafeAreaView, StyleSheet, Text, View,Image, TextInput, Button, Alert } from 'react-native';
+import React, {useState} from 'react';
+import {SafeAreaView, StyleSheet, Text, View,Image, TextInput, Button, Alert, TouchableOpacity } from 'react-native';
 
-
-
-const Separator = () => <View style={styles.separator} />;
+function MyCustomButton(props){
+  return(
+          <TouchableOpacity style={[styles.button, props.style]} onPress={props.onPress}>
+            <Text style={styles.buttonText}>
+              {props.title}
+            </Text>
+          </TouchableOpacity>
+  )
+}
 
 export default function App() {
 
+  const [count, setCount] = useState(0);
+
+  const handleIncrement=()=>{
+    setCount(count + 1)
+   }
+
+  const handleDecrement=()=> {
+    
+    if (count > 0) {
+      setCount(count - 1);
+    }
+   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View>
-        <Text>Hi! It is my first React Native Application.</Text>
-        <Image source={{ uri: 'https://reactnative.dev/docs/assets/p_cat2.png',}}
-            style={{width: 200, height: 200}}
-          />
-          <TextInput
-              style={{
-                width: 200,
-                height: 40,
-                borderColor: 'gray',
-                borderWidth: 1,
-              }}
-              defaultValue="You can type in me"
-            />
-            <Button
-              title="Press me"
-              onPress={() => Alert.alert('Simple Button pressed')}
-            />
-        <StatusBar style="auto" />
-      </View>
-      <View>
-        <Text style={styles.title}>
-          The title and onPress handler are required. It is recommended to set
-          accessibilityLabel to help make your app usable by everyone.
-        </Text>
-        <Button
-          title="Press me"
-          onPress={() => Alert.alert('Simple Button pressed')}
-        />
-      </View>
-      <Separator />
-      <View>
-        <Text style={styles.title}>
-          Adjust the color in a way that looks standard on each platform. On iOS,
-          the color prop controls the color of the text. On Android, the color
-          adjusts the background color of the button.
-        </Text>
-        <Button
-          title="Press me"
-          color="#f194ff"
-          onPress={() => Alert.alert('Button with adjusted color pressed')}
-        />
-      </View>
-      <Separator />
-        <View>
-          <Text style={styles.title}>
-            All interaction for the component are disabled.
-          </Text>
-          <Button
-            title="Press me"
-            disabled
-            onPress={() => Alert.alert('Cannot press this one')}
-          />
-        </View>
-      <Separator />
-      <View>
-      <Text style={styles.title}>
-        This layout strategy lets the title define the width of the button.
-      </Text>
-      <View style={styles.fixToText}>
-        <Button
-          title="Left button"
-          onPress={() => Alert.alert('Left button pressed')}
-        />
-        <Button
-          title="Right button"
-          onPress={() => Alert.alert('Right button pressed')}
-        />
-      </View>
-    </View>
+        <SafeAreaView>
+          <View style={styles.container}>
+            <Image 
+            source={{uri: "https://www.rentallscript.com/resources/content/images/size/w1384/2021/09/React--1-.gif"}}
+            style={styles.image}/>
+            
+            <Text style={styles.text}>Counter: {count} </Text>
+            <Text style={styles.subtitles}>Click buttons to change the counter</Text>
 
-    </SafeAreaView>
+            {/* <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttonText}>
+                  Increment
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={[styles.button , styles.button2 ]}>
+                <Text style={styles.buttonText}>
+                  Decrement
+                </Text>
+              </TouchableOpacity>
+            </View> */}
+
+            <View style={styles.buttonContainer}>
+               <MyCustomButton title="Increment +" onPress={handleIncrement} />
+               <MyCustomButton title="Decrement -" style={{marginStart : 16, backgroundColor : "#C70039",}} 
+               onPress={() => handleDecrement()}/>
+            </View>
+          
+            <Text style={styles.textEnd}>@fuadpro</Text>
+          </View>
+        </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#aa45',
-    alignItems: 'center',
-    justifyContent: 'center',
-    
+  container : {
+    margin : 16,
   },
-  title: {
-    textAlign: 'center',
-    marginVertical: 8,
+  text: {
+      fontSize : 30,
+      marginTop: 16,
   },
-  fixToText: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  textEnd :{
+    textAlign:"center",
+    marginTop: 180,
   },
-  separator: {
-    marginVertical: 8,
-    borderBottomColor: '#737373',
-    borderBottomWidth: StyleSheet.hairlineWidth,
+  subtitles: {
+      fontSize : 20,
+      marginTop: 8,
+      color: "darkgrey",
+    },
+  image : {
+    height: 180,
+    borderRadius: 12,
   },
+  button : {
+    backgroundColor : "lightblue",
+    padding : 12,
+    borderRadius : 12,
+    alignItems: "center",
+    flex : 1,
+  },
+  button2 : {
+    marginStart : 16 ,
+    backgroundColor : "red",
+  },
+    buttonText:{
+    fontSize : 20,
+    color : "black",
+  },
+  buttonContainer:{
+    marginTop : 20,
+    flexDirection : "row",
+  },
+
 });
